@@ -1,7 +1,12 @@
 class ProductsController < ApplicationController
   def index
-    @products = params[:q] ? Product.where('name LIKE ?', "%#{params[:q]}%") : Product.all
+    @products = filter(Product.all)
+    render json: @products
+  end
 
-    render json: @products.order(category: :asc)
+  private
+
+  def filter(products)
+    products.where('name LIKE ?', "%#{params[:q]}%").order(category: :asc)
   end
 end
