@@ -1,4 +1,6 @@
 class Category < ApplicationRecord
   self.table_name = 'category'
-  self.primary_key = 'id'
+
+  # Associations
+  has_many :products, foreign_key: :category
 end
