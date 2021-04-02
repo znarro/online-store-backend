@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.all.sort_by { |product| product.category.id }
-    render json: @products
+    @products = params[:q] ? Product.where('name LIKE ?', "%#{params[:q]}%") : Product.all
+
+    render json: @products.order(category: :asc)
   end
 end
